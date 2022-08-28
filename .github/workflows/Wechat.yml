@@ -27,6 +27,6 @@ jobs:
           python -m pip install --upgrade pip
           pip3 install requests
           pip install zhdate
-      - name: weixin
+      - name: Wechat
         run: |
-          python3 main.py
+          python3 Wechat.py
