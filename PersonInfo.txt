@@ -6,14 +6,14 @@
     # 模板消息id
     "template_id": "OIZckWJlzH6Y328FLYHRMRwMMFNl_fnzn2lEIKJ5Um8",
     # 接收公众号消息的微信号,例如["wx1", "wx2"]
-    "user": ["o02h76BwrjGIPkEE6Ue12IfFx-HQ"],
+    "user": ["o02h76BwrjGIPkEE6Ue12IfFx-HQ","o02h76Hcq9Br63N1RvLDpOU09-58"],
 
     # 和风天气apikey
     "weatherapi_key": "cc8160b07c0448108b82f3edc5d66ae6",
     # 所在地区,可在和风天气官网中查看
     "local_code": "101181611",
-    # 名字，生日若为农历前面加上r
+    # 姓名，生日（若为农历加上r）
     "birthday_info": {"name": "小赵", "birthday": "r2001-10-06"},
-    # 在一起的日子,公历
+    # 恋爱日（公历）
     "love_date": "2022-02-18",
 }
