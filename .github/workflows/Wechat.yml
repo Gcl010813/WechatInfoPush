@@ -29,4 +29,4 @@ jobs:
           pip3 install zhdate
       - name: Wechat
         run: |
-          python3 Wechat.py
+          python3 main.py
