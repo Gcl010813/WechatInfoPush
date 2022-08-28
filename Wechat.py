@@ -133,7 +133,7 @@ def send_message(user, access_token,info):
                 "value": "今天是我们在一起的第{}天".format(love_days)
             },
         },
-    },
+    }
     response = post(url, headers=newhead, json=data).json()
     if response["errcode"] == 0:
         print("Successful")
