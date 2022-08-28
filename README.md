@@ -12,4 +12,4 @@
 
 在此链接里面查询当地对应的的 location_ID 编号 链接：https://github.com/qwd/LocationList/blob/master/China-City-List-latest.csv
 
-打开PersonInfo.txt文件，替换其中的app_id(appID)，app_secret(appsecret)，template_id(模板ID),user(公众平台显示的微信号)，weather_key(KEY),location(Location_ID)，生日/在一起的日子
+打开PersonInfo.txt文件，替换其中的app_id(appID)，app_secret(appsecret)，template_id(模板ID),user(公众平台显示的微信号)，weather_key(KEY),location(Location_ID)，生日,恋爱日
