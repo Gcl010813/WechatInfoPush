@@ -29,11 +29,9 @@ def get_weather(local, key):
 
     Temp = data['temp'] + "℃"  # 温度(摄氏度)
     Text = data['text']  # 天气描述
-    WindDir = data['windDir']  # 风向
     WindSpe = data['windSpeed'] + "m/s"  # 风速
-    Precip = data['precip'] + "mm"  # 降雨量
-
-    return Temp, Text, WindDir, WindSpe, Precip
+    
+    return Temp, Text, WindSpe
 
 
 def get_birthday(birthday, year, today):
@@ -99,7 +97,7 @@ def send_message(user, access_token,info):
     else:
         birthday_text = "{}天后是{}生日哟~".format(birth_day,bir["name"])
 
-    Temp, Text, WindDir, WindSpe, Precip = get_weather(info['local_code'], info['weatherapi_key'])
+    Temp, Text, WindSpe = get_weather(info['local_code'], info['weatherapi_key'])
     data = {
         "touser": user,
         "template_id": info["template_id"],
@@ -117,14 +115,8 @@ def send_message(user, access_token,info):
             "text": {
                 "value": Text
             },
-            "wind_dir": {
-                "value": WindDir
-            },
             "wind_spe": {
                 "value": WindSpe
-            },
-            "precip": {
-                "value": Precip
             },
             "birthday": {
                 "value": birthday_text
