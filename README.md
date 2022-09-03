@@ -23,4 +23,4 @@
 
 8.打开PersonInfo.txt文件，替换其中的app_id(appID)，app_secret(appsecret)，template_id(模板ID),user(公众平台显示的微信号)，weather_key(KEY),location(Location_ID)，生日,恋爱日
 
-## (注意)Wechat.py中109-111行是推送中的位置信息，由于PersonInfo.txt文件中输入的为local_code(Location_id)不是城市信息，故需要更改相应的城市信息
+## (注意)Wechat.py中109-111行是推送中的位置信息，由于PersonInfo.txt文件中输入的为local_code(Location_id)不是城市信息，故需要更改相应的城市信息，one_word采用的是<每日一句情话>链接：https://blog.mcloc.cn/archives/604.html
