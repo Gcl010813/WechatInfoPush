@@ -13,7 +13,7 @@
     # 所在地区,可在和风天气官网中查看
     "local_code": "101181611",
     # 姓名，生日（若为农历加上r）
-    "birthday_info": {"name": "小赵", "birthday": "r2001-10-06"},
+    "birthday_info": {"name": "小赵", "birthday": "r2000-10-06"},
     # 恋爱日（公历）
     "love_date": "2022-02-18",
 }
