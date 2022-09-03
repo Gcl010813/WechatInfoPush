@@ -2,12 +2,11 @@ from time import localtime
 from requests import get, post
 from datetime import datetime, date
 from zhdate import ZhDate
+import requests
 
-
-
-#access_token相关
-def get_access_token(id,secret):
-    url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid="+id+"&secret="+secret
+# access_token相关
+def get_access_token(id, secret):
+    url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=" + id + "&secret=" + secret
     try:
         access_token = get(url).json()['access_token']
         return access_token
@@ -16,21 +15,22 @@ def get_access_token(id,secret):
         return 0
 
 
-#伪装浏览器,防反爬虫技术
-newhead = {"user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.102 Safari/537.36 Edg/104.0.1293.70"}
+# 伪装浏览器,防反爬虫技术
+newhead = {
+    "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.102 Safari/537.36 Edg/104.0.1293.70"}
 
 
-#天气相关
+# 天气相关
 def get_weather(local, key):
-    #和风天气查询网址
-    url = "https://devapi.qweather.com/v7/weather/now?location="+local+"&key="+key
-    #获取天气信息字典
+    # 和风天气查询网址
+    url = "https://devapi.qweather.com/v7/weather/now?location=" + local + "&key=" + key
+    # 获取天气信息字典
     data = get(url, headers=newhead).json()['now']
 
     Temp = data['temp'] + "℃"  # 温度(摄氏度)
     Text = data['text']  # 天气描述
     WindSpe = data['windSpeed'] + "m/s"  # 风速
-    
+
     return Temp, Text, WindSpe
 
 
@@ -63,39 +63,40 @@ def get_birthday(birthday, year, today):
         else:
             birth_date = date((year + 1), mouth, day)
         birth_day = str(birth_date.__sub__(today)).split(" ")[0]
-    #生日当天
+    # 生日当天
     elif today == birthday_date:
         birth_day = 0
-    #生日未过
+    # 生日未过
     else:
         birth_date = birthday_date
         birth_day = str(birth_date.__sub__(today)).split(" ")[0]
     return birth_day
 
-#消息推送
-def send_message(user, access_token,info):
-    url = "https://api.weixin.qq.com/cgi-bin/message/template/send?access_token="+access_token
+
+# 消息推送
+def send_message(user, access_token, info):
+    url = "https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=" + access_token
 
     week_list = ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"]
-    #当前时间年/月/日 重组当前时间
+    # 当前时间年/月/日 重组当前时间
     today = datetime.date(datetime(localtime().tm_year, localtime().tm_mon, localtime().tm_mday))
-    #当天周几
+    # 当天周几
     week = week_list[today.isoweekday() % 7]
 
     # 获取在一起的日子的日期格式
     love_date_list = list(map(int, info['love_date'].split('-')))
     love_date = date(love_date_list[0], love_date_list[1], love_date_list[2])
-    #获取在一起的日期差
+    # 获取在一起的日期差
     love_days = str(today.__sub__(love_date)).split(" ")[0]
 
-    #获取姓名/生日信息
-    bir=info["birthday_info"]
+    # 获取姓名/生日信息
+    bir = info["birthday_info"]
 
     birth_day = get_birthday(bir['birthday'], localtime().tm_year, today)
     if birth_day == 0:
         birthday_text = "祝{}生日快乐哟~♕".format(bir["name"], bir["name"])
     else:
-        birthday_text = "{}天后是{}生日哟~".format(birth_day,bir["name"])
+        birthday_text = "{}天后是{}生日哟~".format(birth_day, bir["name"])
 
     Temp, Text, WindSpe = get_weather(info['local_code'], info['weatherapi_key'])
     data = {
@@ -124,6 +125,9 @@ def send_message(user, access_token,info):
             "love_days": {
                 "value": "今天是我们在一起的第{}天".format(love_days)
             },
+            "one_word":{
+                "value":requests.get('https://api.mcloc.cn/love',headers=newhead).text
+            },
         },
     }
     response = post(url, headers=newhead, json=data).json()
@@ -141,9 +145,9 @@ if __name__ == "__main__":
         print("PersonInfo配置文件异常")
 
     # 获取accessToken
-    AccessToken = get_access_token(Info["app_id"],Info["app_secret"])
+    AccessToken = get_access_token(Info["app_id"], Info["app_secret"])
     # 接收的用户
     Users = Info["user"]
     # 公众号推送消息
     for User in Users:
-        send_message(User, AccessToken,Info)
+        send_message(User, AccessToken, Info)
