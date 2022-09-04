@@ -2,7 +2,7 @@ from time import localtime
 from requests import get, post
 from datetime import datetime, date
 from zhdate import ZhDate
-
+import json
 # access_token相关
 def get_access_token(id, secret):
     url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=" + id + "&secret=" + secret
