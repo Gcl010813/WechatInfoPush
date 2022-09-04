@@ -31,7 +31,7 @@ def get_weather(local, key):
     Text = data['text']  # 天气描述
     WindSpe = data['windSpeed'] + "m/s"  # 风速
 
-    return Temp, Text, WindSpe
+    return Temp, Text
 
 
 def get_birthday(birthday, year, today):
@@ -77,7 +77,7 @@ def get_birthday(birthday, year, today):
 def send_message(user, access_token, info):
     url = "https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=" + access_token
 
-    week_list = ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"]
+    week_list = ["周日", "周一", "周二", "周三", "周四", "周五", "周六"]
     # 当前时间年/月/日 重组当前时间
     today = datetime.date(datetime(localtime().tm_year, localtime().tm_mon, localtime().tm_mday))
     # 当天周几
@@ -94,11 +94,11 @@ def send_message(user, access_token, info):
 
     birth_day = get_birthday(bir['birthday'], localtime().tm_year, today)
     if birth_day == 0:
-        birthday_text = "祝{}生日快乐哟~♕".format(bir["name"], bir["name"])
+        birthday_text = "祝{}生日快乐~请接收来自小郭的爱叭".format(bir["name"])
     else:
-        birthday_text = "{}天后是{}生日哟~".format(birth_day, bir["name"])
+        birthday_text = "{}天后是{}生日哟".format(birth_day, bir["name"])
 
-    Temp, Text, WindSpe = get_weather(info['local_code'], info['weatherapi_key'])
+    Temp, Text = get_weather(info['local_code'], info['weatherapi_key'])
     data = {
         "touser": user,
         "template_id": info["template_id"],
@@ -116,14 +116,11 @@ def send_message(user, access_token, info):
             "text": {
                 "value": Text
             },
-            "wind_spe": {
-                "value": WindSpe
-            },
             "birthday": {
-                "value": birthday_text
+                "value": birthday_text,
             },
             "love_days": {
-                "value": "今天是我们在一起的第{}天".format(love_days)
+                "value": "今天是我们相恋的第"+str(love_days)+"天"
             },
             "one_word":{
                 "value":requests.get('https://api.mcloc.cn/love',headers=newhead).text
