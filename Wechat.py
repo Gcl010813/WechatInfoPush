@@ -98,7 +98,6 @@ def send_message(user, access_token, info):
         birthday_text = "{}天后是{}生日哟".format(birth_day, bir["name"])
 
     Temp, Text = get_weather(info['local_code'], info['weatherapi_key'])
-    Word=requests.get("https://api.mcloc.cn/love",headers=newhead).text
     data = {
         "touser": user,
         "template_id": info["template_id"],
@@ -123,7 +122,7 @@ def send_message(user, access_token, info):
                 "value": "今天是我们相恋的第"+str(love_days)+"天"
             },
             "one_word":{
-                "value":Word
+                "value":get("https://api.mcloc.cn/love",headers=newhead).text
             },
         },
     }
