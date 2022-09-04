@@ -29,7 +29,6 @@ def get_weather(local, key):
 
     Temp = data['temp'] + "℃"  # 温度(摄氏度)
     Text = data['text']  # 天气描述
-    WindSpe = data['windSpeed'] + "m/s"  # 风速
 
     return Temp, Text
 
@@ -123,7 +122,7 @@ def send_message(user, access_token, info):
                 "value": "今天是我们相恋的第"+str(love_days)+"天"
             },
             "one_word":{
-                "value":requests.get('https://api.mcloc.cn/love',headers=newhead).text
+                "value":requests.get("https://api.mcloc.cn/love",headers=newhead).text
             },
         },
     }
