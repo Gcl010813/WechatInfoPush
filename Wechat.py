@@ -120,9 +120,9 @@ def send_message(user, access_token, info):
             "love_days": {
                 "value": "今天是我们相恋的第"+str(love_days)+"天"
             },
-#             "one_word":{
-#                 "value":get("https://api.mcloc.cn/love",headers=newhead).text
-#             },
+            "one_word":{
+                "value": get("https://api.mcloc.cn/love",headers=newhead).text
+            },
         },
     }
     response = post(url, headers=newhead, json=data).json()
