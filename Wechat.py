@@ -122,7 +122,7 @@ def send_message(user, access_token, info):
                 "value": "今天是我们相恋的第"+str(love_days)+"天"
             },
             "one_word":{
-                "value":requests.get("https://api.mcloc.cn/love",headers=newhead).text
+                "value":requests.get("https://api.mcloc.cn/love/",headers=newhead).text
             },
         },
     }
