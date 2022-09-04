@@ -3,7 +3,6 @@ from requests import get, post
 from datetime import datetime, date
 from zhdate import ZhDate
 import requests
-import json
 
 # access_token相关
 def get_access_token(id, secret):
@@ -99,6 +98,7 @@ def send_message(user, access_token, info):
         birthday_text = "{}天后是{}生日哟".format(birth_day, bir["name"])
 
     Temp, Text = get_weather(info['local_code'], info['weatherapi_key'])
+    Word=requests.get("https://api.mcloc.cn/love",headers=newhead).text
     data = {
         "touser": user,
         "template_id": info["template_id"],
@@ -123,7 +123,7 @@ def send_message(user, access_token, info):
                 "value": "今天是我们相恋的第"+str(love_days)+"天"
             },
             "one_word":{
-                "value":json.loads(requests.get("https://api.mcloc.cn/love/?type=json",headers=newhead).text)['data']
+                "value":Word
             },
         },
     }
