@@ -1,3 +1,5 @@
+# -*- coding:utf-8 -*-
+
 from time import localtime
 from requests import get, post
 from datetime import datetime, date
