@@ -121,7 +121,7 @@ def send_message(user, access_token, info):
                 "value": "今天是我们相恋的第"+str(love_days)+"天"
             },
             "one_word":{
-                "value": get("https://api.mcloc.cn/love",headers=newhead).text
+                "value": json.loads(get("https://v1.hitokoto.cn/?c=j",headers=newhead).text)["hitokoto"]
             },
         },
     }
