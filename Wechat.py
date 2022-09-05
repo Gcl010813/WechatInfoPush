@@ -76,36 +76,34 @@ def get_birthday(birthday, year, today):
         birth_day = str(birth_date.__sub__(today)).split(" ")[0]
     return birth_day
 
+week_list = ["周日", "周一", "周二", "周三", "周四", "周五", "周六"]
+# 当前时间年/月/日 重组当前时间
+today = datetime.date(datetime(localtime().tm_year, localtime().tm_mon, localtime().tm_mday))
+# 当天周几
+week = week_list[today.isoweekday() % 7]
+
+# 获取在一起的日子的日期格式
+love_date_list = list(map(int, info['love_date'].split('-')))
+love_date = date(love_date_list[0], love_date_list[1], love_date_list[2])
+# 获取在一起的日期差
+love_days = str(today.__sub__(love_date)).split(" ")[0]
+
+# 获取姓名/生日信息
+bir = Info["birthday_info"]
+birth_day = get_birthday(bir['birthday'], localtime().tm_year, today)
+if birth_day == 0:
+    birthday_text = "祝{}生日快乐~请接收来自小郭的爱叭".format(bir["name"])
+else:
+    birthday_text = "{}天后是{}生日哟".format(birth_day, bir["name"])
+
+Temp, Text = get_weather(Info['local_code'], Info['weatherapi_key'])
 
 # 消息推送
-def send_message(user, access_token, info, wordflag):
+def send_message(user, access_token, tem_id, wordflag):
     url = "https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=" + access_token
-
-    week_list = ["周日", "周一", "周二", "周三", "周四", "周五", "周六"]
-    # 当前时间年/月/日 重组当前时间
-    today = datetime.date(datetime(localtime().tm_year, localtime().tm_mon, localtime().tm_mday))
-    # 当天周几
-    week = week_list[today.isoweekday() % 7]
-
-    # 获取在一起的日子的日期格式
-    love_date_list = list(map(int, info['love_date'].split('-')))
-    love_date = date(love_date_list[0], love_date_list[1], love_date_list[2])
-    # 获取在一起的日期差
-    love_days = str(today.__sub__(love_date)).split(" ")[0]
-
-    # 获取姓名/生日信息
-    bir = info["birthday_info"]
-
-    birth_day = get_birthday(bir['birthday'], localtime().tm_year, today)
-    if birth_day == 0:
-        birthday_text = "祝{}生日快乐~请接收来自小郭的爱叭".format(bir["name"])
-    else:
-        birthday_text = "{}天后是{}生日哟".format(birth_day, bir["name"])
-
-    Temp, Text = get_weather(info['local_code'], info['weatherapi_key'])
     data = {
         "touser": user,
-        "template_id": info["template_id"],
+        "template_id": tem_id,
         "url": "http://weixin.qq.com/download",
         "data": {
             "date": {
@@ -153,4 +151,4 @@ if __name__ == "__main__":
     Users = Info["user"]
     # 公众号推送消息
     for User in Users:
-        send_message(User, AccessToken, Info, WordFlag)
+        send_message(User, AccessToken, Info["template_id"], WordFlag)
