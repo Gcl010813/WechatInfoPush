@@ -18,9 +18,11 @@
 7.在此链接里面查询当地对应的的 location_ID 编号 链接：https://github.com/qwd/LocationList/blob/master/China-City-List-latest.csv
 ![image](Photo/local.png)
 
-## (注意)为便于区分全国各地（县区和市区名称存在混淆的情况），和风天气采用唯一的Location_ID来查询天气
+## 为便于区分全国各地（县区和市区名称存在混淆的情况），和风天气采用唯一的Location_ID来查询天气
 ![image](Photo/local_code.png)
 
 8.打开PersonInfo.txt文件，替换其中的app_id(appID)，app_secret(appsecret)，template_id(模板ID),user(公众平台显示的微信号)，weather_key(KEY),location(Location_ID)，生日,恋爱日
 
-## (注意)Wechat.py中109-111行是推送中的位置信息，由于PersonInfo.txt文件中输入的为local_code(Location_id)不是城市信息，故需要更改相应的城市信息，one_word采用的是<每日一句情话>链接：https://blog.mcloc.cn/archives/604.html 中的话，但是由于网站的限制性要求无法使用github爬取，故使用Pycharm爬取后存入列表随机调用
+## Wechat.py中86-88行是推送中的位置信息，由于PersonInfo.txt文件中输入的为local_code(Location_id)不是城市信息，故需要更改相应的城市信息
+
+## one_word采用的是<每日一句情话>链接：https://blog.mcloc.cn/archives/604.html 中的话，但是由于网站的限制性要求无法使用github爬取，故使用Pycharm爬取后存入列表随机调用
