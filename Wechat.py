@@ -78,7 +78,7 @@ def get_birthday(birthday, year, today):
 
 
 # 消息推送
-def send_message(user, access_token, info):
+def send_message(user, access_token, info, wordflag):
     url = "https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=" + access_token
 
     week_list = ["周日", "周一", "周二", "周三", "周四", "周五", "周六"]
@@ -127,7 +127,7 @@ def send_message(user, access_token, info):
                 "value": "今天是我们相恋的第"+str(love_days)+"天"
             },
             "one_word":{
-                "value": Words[random.randint(0,517)]
+                "value": Words[wordflag]
             },
         },
     }
@@ -147,8 +147,10 @@ if __name__ == "__main__":
 
     # 获取accessToken
     AccessToken = get_access_token(Info["app_id"], Info["app_secret"])
+    # 每日一句话随机获取
+    WordFlag = random.randint(0,517)
     # 接收的用户
     Users = Info["user"]
     # 公众号推送消息
     for User in Users:
-        send_message(User, AccessToken, Info)
+        send_message(User, AccessToken, Info, WordFlag)
