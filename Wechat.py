@@ -83,7 +83,7 @@ today = datetime.date(datetime(localtime().tm_year, localtime().tm_mon, localtim
 week = week_list[today.isoweekday() % 7]
 
 # 获取在一起的日子的日期格式
-love_date_list = list(map(int, info['love_date'].split('-')))
+love_date_list = list(map(int, Info['love_date'].split('-')))
 love_date = date(love_date_list[0], love_date_list[1], love_date_list[2])
 # 获取在一起的日期差
 love_days = str(today.__sub__(love_date)).split(" ")[0]
