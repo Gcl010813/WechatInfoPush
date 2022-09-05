@@ -21,13 +21,16 @@ def get_access_token(id, secret):
 # 天气相关
 def get_weather(local, key):
     # 和风天气查询网址
-    url = "https://devapi.qweather.com/v7/weather/now?location=" + local + "&key=" + key
+    url = "https://devapi.qweather.com/v7/weather/3d?location=" + local + "&key=" + key
     # 获取天气信息字典
-    data = get(url, headers=newhead).json()['now']
-    Text = data['text']  # 天气描述
-    Temp = data['temp'] + "℃"  # 温度(摄氏度)
+    data = get(url, headers=newhead).json()['daily'][0]
+    Sunup = data['sunrise']  # 日出
+    Sundown = data['sunset']  # 日落
+    Text = data['textDay']  # 天气描述
+    Tempmax = data['tempMax'] + "℃"  # 温度(摄氏度)
+    Tempmin = data['tempMin'] + "℃"  # 温度(摄氏度)
 
-    return Text, Temp
+    return Sunup, Sundown, Text, Tempmax, Tempmin
 
 
 def get_birthday(birthday, year, today):
@@ -83,11 +86,20 @@ def send_message(user, access_token, tem_id, wordflag):
             "local": {
                 "value": "驻马店市驿城区"
             },
-            "temp": {
-                "value": Temp
+            "sunup":{
+                "value":Sunup
+            },
+            "sundown":{
+                "value":Sundown
             },
             "text": {
                 "value": Text
+            },
+            "temp_max": {
+                "value": Tempmax
+            },
+            "temp_min":{
+                "value":Tempmin
             },
             "birthday": {
                 "value": birthday_text
@@ -327,12 +339,12 @@ if __name__ == "__main__":
         birthday_text = "{}天后是{}生日哟".format(birth_day, bir["name"])
 
     # 获取天气描述/气温
-    Text, Temp = get_weather(Info['local_code'], Info['weatherapi_key'])
+    Sunup, Sundown, Text, Tempmax, Tempmin = get_weather(Info['local_code'], Info['weatherapi_key'])
 
     # 获取accessToken
     AccessToken = get_access_token(Info["app_id"], Info["app_secret"])
-    #每日一句随机获取列表
-    WordFlag=random.randint(0,517)
+    # 每日一句随机获取列表
+    WordFlag = random.randint(0, 517)
     # 接收的用户
     Users = Info["user"]
     # 公众号推送消息
