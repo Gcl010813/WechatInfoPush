@@ -29,8 +29,9 @@ def get_weather(local, key):
     Text = data['textDay']  # 天气描述
     Tempmax = data['tempMax'] + "℃"  # 温度(摄氏度)
     Tempmin = data['tempMin'] + "℃"  # 温度(摄氏度)
+    WindScale = data['windScaleDay'] + "级"  # 风速
 
-    return Sunup, Sundown, Text, Tempmax, Tempmin
+    return Sunup, Sundown, Text, Tempmax, Tempmin, WindScale
 
 
 def get_birthday(birthday, year, today):
@@ -86,11 +87,11 @@ def send_message(user, access_token, tem_id, wordflag):
             "local": {
                 "value": "驻马店市驿城区"
             },
-            "sunup":{
-                "value":Sunup
+            "sunup": {
+                "value": Sunup
             },
-            "sundown":{
-                "value":Sundown
+            "sundown": {
+                "value": Sundown
             },
             "text": {
                 "value": Text
@@ -98,8 +99,11 @@ def send_message(user, access_token, tem_id, wordflag):
             "temp_max": {
                 "value": Tempmax
             },
-            "temp_min":{
-                "value":Tempmin
+            "temp_min": {
+                "value": Tempmin
+            },
+            "wind": {
+                "value": WindScale
             },
             "birthday": {
                 "value": birthday_text
@@ -339,7 +343,7 @@ if __name__ == "__main__":
         birthday_text = "{}天后是{}生日哟".format(birth_day, bir["name"])
 
     # 获取天气描述/气温
-    Sunup, Sundown, Text, Tempmax, Tempmin = get_weather(Info['local_code'], Info['weatherapi_key'])
+    Sunup, Sundown, Text, Tempmax, Tempmin, WindScale = get_weather(Info['local_code'], Info['weatherapi_key'])
 
     # 获取accessToken
     AccessToken = get_access_token(Info["app_id"], Info["app_secret"])
