@@ -34,42 +34,34 @@ def get_weather(local, key):
     return Sunup, Sundown, Text, Tempmax, Tempmin, WindScale
 
 
-def get_birthday(birthday, year, today):
-    # 判断是否为农历生日
-    if birthday.split('-')[0][0] == "r":
-        mouth = int(birthday.split("-")[1])
-        day = int(birthday.split("-")[2])
-        # 获取农历生日对应的公历生日
-        try:
-            birthday = ZhDate(year, mouth, day).to_datetime().date()
-        except TypeError:
-            print("查看今年是否有农历对应的公历生日")
-        # 今年公历生日日期
-        birthday_date = date(year, birthday.month, birthday.day)
-    else:
-        # 获取公历生日的今年对应月和日
-        month = int(birthday.split("-")[1])
-        day = int(birthday.split("-")[2])
-        # 今年公历生日日期
-        birthday_date = date(year, month, day)
+def get_birthday(Birthday, Year, Today):
+    # 农历生日月份
+    mouth = int(Birthday.split("-")[1])
+    # 农历生日日期
+    day = int(Birthday.split("-")[2])
+    # 农历生日转公历生日
+    birthday = ZhDate(Year, mouth, day).to_datetime().date()
+    # 重新组合日期格式
+    birthday_date = date(Year, birthday.month, birthday.day)
 
     # 生日已过
-    if today > birthday_date:
-        if birthday.split('-')[0][0] == "r":
-            # 根据农历生日的月和日获取明年公历生日的月和日
-            last_birthday = ZhDate((year + 1), mouth, day).to_datetime().date()
-            # 重新组合成明年的公历生日
-            birth_date = date((year + 1), last_birthday.month, last_birthday.day)
-        else:
-            birth_date = date((year + 1), mouth, day)
+    if Today > birthday_date:
+        # 年份增加 获取第二年农历生日对应的公历生日
+        last_birthday = ZhDate((Year + 1), mouth, day).to_datetime().date()
+        # 重新组合第二年公历生日日期格式
+        birth_date = date((Year + 1), last_birthday.month, last_birthday.day)
+        # 计算距离生日天数
         birth_day = str(birth_date.__sub__(today)).split(" ")[0]
+
     # 生日当天
-    elif today == birthday_date:
+    elif Today == birthday_date:
         birth_day = 0
+
     # 生日未过
     else:
         birth_date = birthday_date
         birth_day = str(birth_date.__sub__(today)).split(" ")[0]
+
     return birth_day
 
 
