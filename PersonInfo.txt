@@ -5,15 +5,15 @@
     "app_secret": "7d0775191fff6c301948e2c5679df006",
     # 模板消息id
     "template_id": "pOYJIPopOZ7lvOsnCkXq6DUi74kuvGyfgSqenfTuBEc",
-    # 接收公众号消息的微信号,例如["wx1", "wx2"]
-    "user": ["o02h76BwrjGIPkEE6Ue12IfFx-HQ","o02h76Hcq9Br63N1RvLDpOU09-58"],
+    # 接收公众号消息的微信号,例如["wx1", "wx2"] 小赵的id: o02h76Hcq9Br63N1RvLDpOU09-58
+    "user": ["o02h76Hcq9Br63N1RvLDpOU09-58","o02h76BwrjGIPkEE6Ue12IfFx-HQ"],
 
     # 和风天气apikey
     "weatherapi_key": "cc8160b07c0448108b82f3edc5d66ae6",
     # 所在地区,可在和风天气官网中查看
     "local_code": "101181611",
-    # 名字，生日若为农历前面加上r
-    "birthday_info": {"name": "小赵", "birthday": "r2000-10-06"},
+    # 名字|生日(农历生日)
+    "birthday_info": {"name": "小赵", "birthday": "2000-10-06"},
     # 在一起的日子,公历
     "love_date": "2022-02-18",
 }
